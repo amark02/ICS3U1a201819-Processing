@@ -7,7 +7,10 @@ ufo_speed_y = 2
 #Variables for mouse click
 click_number = 0
 
-#Bouncing Aryan
+#Varibles for keyboard press
+key_number = 0
+
+#Varibles for bouncing Aryan
 aryan_speed_x = 7
 aryan_speed_y = 2
 
@@ -23,14 +26,20 @@ def draw():
     global delta_x, delta_y, ufo_speed_x, ufo_speed_y
     global click_number
     global aryan_speed_x, aryan_speed_y
+    global key_number
     
     if click_number == 0:
         background(0)
         image(webImg, 0, 0)
         
+        fill("#1ebcbc")
+        textAlign(CENTER)
+        textSize(50)
+        text("Click the mouse for a surpise", width/2, height/2)
+        
         noStroke()
         fill("#2c8399")
-        ellipse(width/2, height/2, 100, 100)
+        ellipse(width/2-200, height/2-200, 100, 100)
         
         noStroke()
         fill("#664491")
@@ -56,12 +65,14 @@ def draw():
             ufo_speed_y *= -1
             
     #Mouse click    
-    if click_number == 1:
+    if click_number == 1 and key_number == 0:
             background("#ffffff")
             fill("#000000")
             textAlign(CENTER)
             textSize(30)
             text("Press \'i' to invert the colour", width/2, height/2) 
+            textSize(15)
+            text("Look it's bouncing Aryan, how wonderful!", width/2, height/2+20)
             
             #Bouncing Aryan
             image(aryan, delta_x, delta_y, width/4, height/4)
@@ -72,6 +83,29 @@ def draw():
                 aryan_speed_x *= -1
             elif delta_y <= 0 or delta_y >= 550:
                 aryan_speed_y *= -1
+                
+        #Inverting colours        
+    if click_number == 1 and key_number == 1:
+            background("#ffffff")
+            fill("#000000")
+            textAlign(CENTER)
+            textSize(30)
+            text("Press \'i' to invert the colour", width/2, height/2) 
+            textSize(15)
+            text("Look it's bouncing Aryan, how wonderful!", width/2, height/2+20)
+            
+            #Bouncing Aryan
+            image(aryan, delta_x, delta_y, width/4, height/4)
+            delta_x += aryan_speed_x
+            delta_y += aryan_speed_y
+            print(delta_x)
+            if delta_x <= 0 or delta_x >= 690:
+                aryan_speed_x *= -1
+            elif delta_y <= 0 or delta_y >= 550:
+                aryan_speed_y *= -1
+            
+            filter(INVERT)
+                
                                 
 #Mouse click    
 def mousePressed():
@@ -79,3 +113,10 @@ def mousePressed():
     click_number += 1
     if click_number == 2:
         click_number = 0
+        
+#Keyboard press
+def keyPressed(i):
+    global key_number
+    key_number += 1
+    if key_number == 2:
+        key_number = 0
